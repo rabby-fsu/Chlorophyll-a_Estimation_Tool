@@ -19,8 +19,8 @@ from sklearn.ensemble import RandomForestRegressor
 
 # Define the URL to the CSV file in your GitHub repository
 github_csv_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/DataFile_ML_All.csv'
-df = pd.read_csv(github_csv_url
-df = df.drop(columns=['Date', 'id', 'station_code'])
+df = pd.read_csv(github_csv_url)
+
 
                  
 # Define the Streamlit app pages
