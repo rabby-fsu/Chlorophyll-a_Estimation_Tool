@@ -79,7 +79,7 @@ if page == 'Model A: Using Physical Chemical Water Quality Parameters':
         predictions = xgb_model_Bayesian_01.predict(test_data)
         
         # Append predictions as a new column
-        test_data['Model A Predictions'] = predictions
+        test_data['Estimated Chlorophyll-a (ug/l)'] = predictions
         
         # Download the results as a CSV file
         st.write("Download the results as a CSV file.")
