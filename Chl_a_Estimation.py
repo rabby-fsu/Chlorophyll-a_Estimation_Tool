@@ -12,29 +12,6 @@ import pickle
 from io import BytesIO
 import base64
 
-# Define the URLs of the models on GitHub
-model_A_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/xgb_model_Bayesian_01.pkl'  # Replace with the URL for Model A
-model_B_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/rf_model_HAB_Grid_02_updated.pkl'  # Replace with the URL for Model B
-
-
-# Load the pre-trained models locally
-#with open("xgb_model_Bayesian_01.pkl", "rb") as model_file_A:
-    #model_A = pickle.load(model_file_A)
-
-#model_B_path = 'C:/Users/88017/rf_model_HAB_Grid_02.pkl'
-#with open(model_B_path, "rb") as model_file_B:
-
-#with open("rf_model_HAB_Random_02", "rb") as model_file_B:
-    #model_B = pickle.load(model_file_B)
-
-# Load the saved model
-#model_B = joblib.load('rf_model_HAB_Random_02.joblib')
-
-# Function to load a model from GitHub
-def load_model_from_github(url):
-    response = requests.get(url)
-    model = pickle.load(BytesIO(response.content))
-    return model
 
 # Define the Streamlit app pages
 pages = ['Home','Model A: Using Physical Chemical Water Quality Parameters', 'Model B: Using Physical Chemical Water Quality and Meteorological Parameters']
