@@ -18,7 +18,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 
 # Define the URL to the CSV file in your GitHub repository
-github_csv_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/DataFile_ML_All.csv'
+github_csv_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
 df = pd.read_csv(github_csv_url)
 
 
