@@ -6,21 +6,23 @@ Created on Tue Oct 31 03:26:12 2023
 """
 
 import streamlit as st
+import numpy as np
 import pandas as pd
 import requests
-import pickle
-import joblib
 from io import BytesIO
 import base64
-import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 import xgboost as xgb
 from xgboost import XGBRegressor
-import streamlit as st
-import base64
+from sklearn.ensemble import RandomForestRegressor
 
 
+# Define the URL to the CSV file in your GitHub repository
+github_csv_url = 'https://raw.githubusercontent.com/YourUsername/YourRepositoryName/YourFilePath/DataFile_ML_All.csv'
+df = pd.read_csv(github_csv_url
+df = df.drop(columns=['Date', 'id', 'station_code'])
+
+                 
 # Define the Streamlit app pages
 pages = ['Home','Model A: Using Physical Chemical Water Quality Parameters', 'Model B: Using Physical Chemical Water Quality and Meteorological Parameters']
 
@@ -34,13 +36,6 @@ st.sidebar.write("Welcome to the Chlorophyll-a Estimation Tool. This tool allows
 st.sidebar.image("rider.png", use_column_width=True)
 st.sidebar.image("famufsu.png", use_column_width=True)
 st.sidebar.image("fdep.jpeg", use_column_width=True)
-
-
-
-# Define the URL to the CSV file in your GitHub repository
-github_csv_url = 'https://raw.githubusercontent.com/YourUsername/YourRepositoryName/YourFilePath/DataFile_ML_All.csv'
-df = pd.read_csv(github_csv_url
-df = df.drop(columns=['Date', 'id', 'station_code'])
 
 
 # Model A
@@ -91,11 +86,7 @@ if page == 'Model A: Using Physical Chemical Water Quality Parameters':
 
 
 #Model B:
-import streamlit as st
-import pandas as pd
-import numpy as np
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
+
 
 # Step 1: Data Preprocessing (Assuming your data is in a DataFrame called 'data_CDEP')
 selected_features_2 = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)', 'Salinity(ppt)','pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year', 'ATemp_max' ,'ATemp_max_1dlag','ATemp_max_2dlag', 'ATemp_max_3dlag', 'ATemp_max_4dlag', 'ATemp_max_5dlag', 'ATemp_max_6dlag', 'ATemp_max_7dlag']
