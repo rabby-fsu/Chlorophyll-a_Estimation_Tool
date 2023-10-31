@@ -15,7 +15,7 @@ import base64
 
 # Define the URLs of the models on GitHub
 model_A_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/xgb_model_Bayesian_01.joblib'  # Replace with the URL for Model A
-model_B_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/Model-B/rf_model_HAB_Grid_02.pkl'  # Replace with the URL for Model B
+model_B_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/rf_model_HAB_Grid_02.pkl'  # Replace with the URL for Model B
 
 
 # Load the pre-trained models locally
