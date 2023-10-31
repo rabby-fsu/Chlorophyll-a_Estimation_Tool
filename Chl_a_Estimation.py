@@ -92,10 +92,13 @@ for iteration in range(num_iterations):
     decision_trees_mean.append(rf_model_HAB_Grid_02)
 
 
-    
+if page == 'Home':    
+    st.write("Model -A (Based one Physical-Chemical Water Quality Parameters: XGBoost Regression with Bayesian Optimization)")
+    st.write("Model -B (Based one Physical-Chemical Water Quality and Meteorological Parameters: Decision Tree Regression optimized with Grid Search algorithm)")
+    st.write("Please Note: Julian Year = Year + (Days into the Year / Total Days in the Year")
 
 # Model A page
-if page == 'Model A: Using Physical Chemical Water Quality Parameters':
+elif page == 'Model A: Using Physical Chemical Water Quality Parameters':
     st.title('Model A: Estimate Chlorophyll-a (ug/l) Using Physical Chemical Water Quality Parameters')
     st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.043, MAE=2.256, PBIAS=-35.15")
     
