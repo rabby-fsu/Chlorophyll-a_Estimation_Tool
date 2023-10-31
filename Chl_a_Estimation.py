@@ -126,7 +126,7 @@ elif page == 'Model A: Using Physical Chemical Water Quality Parameters':
 
 # Model B page
 elif page == 'Model B: Using Physical Chemical Water Quality and Meteorological Parameters':
-    st.title('Estimate Chlorophyll-a (ug/l) Using Physical-Chemical Water Quality Parameters and Meteorological Parameters')
+    st.title('Model B: Estimate Chlorophyll-a (ug/l) Using Physical-Chemical Water Quality Parameters and Meteorological Parameters')
     st.write("Model A: Pretrained Random Forest Regression model optimized using Grid Search Algorithm.")
     st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.037, MAE=2.188, PBIAS=-37.47")
     st.write("The uploaded csv should only contain the following columns in order: ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)','Salinity(ppt)', 'pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year', 'ATemp_max' ,'ATemp_max_1dlag','ATemp_max_2dlag', 'ATemp_max_3dlag', 'ATemp_max_4dlag', 'ATemp_max_5dlag', 'ATemp_max_6dlag', 'ATemp_max_7dlag']")
