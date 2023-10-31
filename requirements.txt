@@ -5,4 +5,4 @@ requests
 pickle
 io 
 BytesIO
-base 64
+base64
