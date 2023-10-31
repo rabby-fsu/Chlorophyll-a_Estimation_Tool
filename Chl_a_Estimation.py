@@ -18,9 +18,12 @@ from sklearn.ensemble import RandomForestRegressor
 
 
 # Define the URL to the CSV file in your GitHub repository
-github_csv_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
-df = pd.read_csv(github_csv_url)
+github_csv_url_A = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
+df_A = pd.read_csv(github_csv_url_A)
 
+# Define the URL to the CSV file in your GitHub repository
+github_csv_url_B = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelB_data.csv'
+df_B = pd.read_csv(github_csv_url_B)
 
                  
 # Define the Streamlit app pages
@@ -41,8 +44,8 @@ st.sidebar.image("fdep.jpeg", use_column_width=True)
 # Model A
 # Step 1: Data Preprocessing (Assuming your data is in a DataFrame called 'data_CDEP')
 selected_features_1 = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)', 'Salinity(ppt)','pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year']
-X_1 = df[selected_features_1]  # Independent variables
-y_1 = df['Chlorophyll-a (ug/l)']  # Log-transform the target variable        # Target variable
+X_1 = df_A[selected_features_1]  # Independent variables
+y_1 = df_A['Chlorophyll-a (ug/l)']  # Log-transform the target variable        # Target variable
 
 # Perform an 70-30 train-test split
 X_train_1, X_test_1, y_train_1, y_test_1 = train_test_split(X_1, y_1, test_size=0.3, random_state=42)
@@ -59,8 +62,8 @@ xgb_model_Bayesian_01.fit(X_train_1, y_train_1)
 
 # Step 1: Data Preprocessing (Assuming your data is in a DataFrame called 'data_CDEP')
 selected_features_2 = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)', 'Salinity(ppt)','pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year', 'ATemp_max' ,'ATemp_max_1dlag','ATemp_max_2dlag', 'ATemp_max_3dlag', 'ATemp_max_4dlag', 'ATemp_max_5dlag', 'ATemp_max_6dlag', 'ATemp_max_7dlag']
-X_2 = df[selected_features_2]  # Independent variables
-y_2 = df['Chlorophyll-a (ug/l)']  # target variable
+X_2 = df_B[selected_features_2]  # Independent variables
+y_2 = df_B['Chlorophyll-a (ug/l)']  # target variable
 
 # Split the data into training and test sets
 X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(X_2, y_2, test_size=0.3, random_state=42)
