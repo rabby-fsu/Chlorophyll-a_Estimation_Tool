@@ -39,7 +39,7 @@ st.set_page_config(page_title='Chlorophyll-a Estimation Tool for Bay-Estuary', l
 page = st.selectbox('Select Page', pages)
 
 st.sidebar.title('Chlorophyll-a Estimation Tool for Bay-Estuary')
-st.sidebar.write("Welcome to the Chlorophyll-a Estimation Tool. This tool allows you to upload a CSV file containing some specific variables, make predictions on chlorophyll-a concentration in Apalachicola Bay using pretrained machine learning models, and download the results as a CSV file.")
+st.sidebar.write("Welcome to the Chlorophyll-a Estimation Tool for Bay-Estuary. This tool was developed training Machine Learning models with data collected from Apalachicola Bay from 2003-2021. This tool allow users to estimate Chl-a levels (ug/l) in bay estuaries based on physical-chemical water quality parameters with or without meteorological parameters.")
 st.sidebar.image("rider.png", use_column_width=True)
 st.sidebar.image("famufsu.png", use_column_width=True)
 st.sidebar.image("fdep.jpeg", use_column_width=True)
@@ -102,7 +102,7 @@ if page == 'Home':
 elif page == 'Model A: Using Physical Chemical Water Quality Parameters':
     st.title('Model A: Estimate Chlorophyll-a (ug/l) Using Physical Chemical Water Quality Parameters')
     st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.043, MAE=2.256, PBIAS=-35.15")
-    
+    st.write("The uploaded csv should only contain the following columns in order: ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)', 'Salinity(ppt)','pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year']")
     # Upload CSV file
     uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
     
@@ -133,7 +133,7 @@ elif page == 'Model B: Using Physical Chemical Water Quality and Meteorological 
     st.title('Estimate Chlorophyll-a (ug/l) Using Physical-Chemical Water Quality Parameters and Meteorological Parameters')
     st.write("Model A: Pretrained Random Forest Regression model optimized using Grid Search Algorithm.")
     st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.037, MAE=2.188, PBIAS=-37.47")
-    
+    st.write("The uploaded csv should only contain the following columns in order: ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)','Salinity(ppt)', 'pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year', 'ATemp_max' ,'ATemp_max_1dlag','ATemp_max_2dlag', 'ATemp_max_3dlag', 'ATemp_max_4dlag', 'ATemp_max_5dlag', 'ATemp_max_6dlag', 'ATemp_max_7dlag']")
     # Upload CSV file
     uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
     
