@@ -12,30 +12,14 @@ import pickle
 import joblib
 from io import BytesIO
 import base64
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+import xgboost as xgb
+from xgboost import XGBRegressor
+import streamlit as st
+import base64
 
-# Define the URLs of the models on GitHub
-model_A_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/xgb_model_Bayesian_01.joblib'  # Replace with the URL for Model A
-model_B_url = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/rf_model_HAB_Grid_02.joblib'  # Replace with the URL for Model B
-
-
-# Load the pre-trained models locally
-#with open("xgb_model_Bayesian_01.pkl", "rb") as model_file_A:
-    #model_A = pickle.load(model_file_A)
-
-#model_B_path = 'C:/Users/88017/rf_model_HAB_Grid_02.pkl'
-#with open(model_B_path, "rb") as model_file_B:
-
-#with open("rf_model_HAB_Random_02", "rb") as model_file_B:
-    #model_B = pickle.load(model_file_B)
-
-# Load the saved model
-#model_B = joblib.load('rf_model_HAB_Random_02.joblib')
-
-# Function to load a model from GitHub
-def load_model_from_github(url):
-    response = requests.get(url)
-    model = pickle.load(BytesIO(response.content))
-    return model
 
 # Define the Streamlit app pages
 pages = ['Home','Model A: Using Physical Chemical Water Quality Parameters', 'Model B: Using Physical Chemical Water Quality and Meteorological Parameters']
@@ -53,12 +37,31 @@ st.sidebar.image("fdep.jpeg", use_column_width=True)
 
 
 
+# Define the URL to the CSV file in your GitHub repository
+github_csv_url = 'https://raw.githubusercontent.com/YourUsername/YourRepositoryName/YourFilePath/DataFile_ML_All.csv'
+df = pd.read_csv(github_csv_url
+df = df.drop(columns=['Date', 'id', 'station_code'])
 
+
+# Model A
+# Step 1: Data Preprocessing (Assuming your data is in a DataFrame called 'data_CDEP')
+selected_features_1 = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)', 'Salinity(ppt)','pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year']
+X_1 = df[selected_features_1]  # Independent variables
+y_1 = df['Chlorophyll-a (ug/l)']  # Log-transform the target variable        # Target variable
+
+# Perform an 70-30 train-test split
+X_train_1, X_test_1, y_train_1, y_test_1 = train_test_split(X_1, y_1, test_size=0.3, random_state=42)
+
+                 
+# Load the pre-trained XGBoost model
+xgb_model_Bayesian_01 = XGBRegressor(random_state=42, n_estimators=160, max_depth=4, learning_rate=0.07818940902700418)
+xgb_model_Bayesian_01.fit(X_train_1, y_train_1)
+
+    
 
 # Model A page
 if page == 'Model A: Using Physical Chemical Water Quality Parameters':
-    st.title('Estimate Chlorophyll-a (ug/l) Using Physical Chemical Water Quality Parameters')
-    st.write("Model A: Pretrained XGBoost Regression model optimized using Bayesian Optimization Algorithm")
+    st.title('Model A: Estimate Chlorophyll-a (ug/l) Using Physical Chemical Water Quality Parameters')
     st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.043, MAE=2.256, PBIAS=-35.15")
     
     # Upload CSV file
@@ -71,12 +74,9 @@ if page == 'Model A: Using Physical Chemical Water Quality Parameters':
         # Reorganize the columns to match the expected feature names
         test_data = test_data[expected_feature_names]
 
-        
-        # Load Model A from GitHub
-        model_A = load_model_from_github(model_A_url)
-        
+
         # Make predictions using Model A
-        predictions = model_A.predict(test_data)
+        predictions = xgb_model_Bayesian_01.predict(test_data)
         
         # Append predictions as a new column
         test_data['Model A Predictions'] = predictions
