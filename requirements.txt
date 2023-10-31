@@ -1,9 +1,6 @@
 streamlit
-pandas
-numpy
+numpy    
+pandas   
 requests
-pickle
-joblib==0.14.1
-io 
-BytesIO
-base64
+xgboost 
+scikit-learn
