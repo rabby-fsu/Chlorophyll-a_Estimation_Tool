@@ -52,37 +52,6 @@ X_train_1, X_test_1, y_train_1, y_test_1 = train_test_split(X_1, y_1, test_size=
 xgb_model_Bayesian_01 = XGBRegressor(random_state=42, n_estimators=160, max_depth=4, learning_rate=0.07818940902700418)
 xgb_model_Bayesian_01.fit(X_train_1, y_train_1)
 
-    
-
-# Model A page
-if page == 'Model A: Using Physical Chemical Water Quality Parameters':
-    st.title('Model A: Estimate Chlorophyll-a (ug/l) Using Physical Chemical Water Quality Parameters')
-    st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.043, MAE=2.256, PBIAS=-35.15")
-    
-    # Upload CSV file
-    uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
-    
-    if uploaded_file is not None:
-        test_data = pd.read_csv(uploaded_file)
-        expected_feature_names = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)','Salinity(ppt)', 'pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year']
-
-        # Reorganize the columns to match the expected feature names
-        test_data = test_data[expected_feature_names]
-
-
-        # Make predictions using Model A
-        predictions = xgb_model_Bayesian_01.predict(test_data)
-        
-        # Append predictions as a new column
-        test_data['Estimated Chlorophyll-a (ug/l)'] = predictions
-        
-        # Download the results as a CSV file
-        st.write("Download the results as a CSV file.")
-        csv = test_data.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding
-        href = f'<a href="data:file/csv;base64,{b64}" download="model_a_predictions.csv">Download CSV</a>'
-        st.markdown(href, unsafe_allow_html=True)
-
 
 
 #Model B:
@@ -114,6 +83,38 @@ for iteration in range(num_iterations):
     )
     rf_model_HAB_Grid_02.fit(X_train_bootstrap, y_train_bootstrap)
     decision_trees_mean.append(rf_model_HAB_Grid_02)
+
+
+    
+
+# Model A page
+if page == 'Model A: Using Physical Chemical Water Quality Parameters':
+    st.title('Model A: Estimate Chlorophyll-a (ug/l) Using Physical Chemical Water Quality Parameters')
+    st.write("Evaluation Metrics: For Test Set, R2=0.64, RMSE=3.043, MAE=2.256, PBIAS=-35.15")
+    
+    # Upload CSV file
+    uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
+    
+    if uploaded_file is not None:
+        test_data = pd.read_csv(uploaded_file)
+        expected_feature_names = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)','Salinity(ppt)', 'pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year']
+
+        # Reorganize the columns to match the expected feature names
+        test_data = test_data[expected_feature_names]
+
+
+        # Make predictions using Model A
+        predictions = xgb_model_Bayesian_01.predict(test_data)
+        
+        # Append predictions as a new column
+        test_data['Estimated Chlorophyll-a (ug/l)'] = predictions
+        
+        # Download the results as a CSV file
+        st.write("Download the results as a CSV file.")
+        csv = test_data.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding
+        href = f'<a href="data:file/csv;base64,{b64}" download="model_a_predictions.csv">Download CSV</a>'
+        st.markdown(href, unsafe_allow_html=True)
 
 
 # Model B page
