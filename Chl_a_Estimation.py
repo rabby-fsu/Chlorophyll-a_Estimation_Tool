@@ -88,6 +88,43 @@ if page == 'Model A: Using Physical Chemical Water Quality Parameters':
         href = f'<a href="data:file/csv;base64,{b64}" download="model_a_predictions.csv">Download CSV</a>'
         st.markdown(href, unsafe_allow_html=True)
 
+
+
+#Model B:
+import streamlit as st
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+
+# Step 1: Data Preprocessing (Assuming your data is in a DataFrame called 'data_CDEP')
+selected_features_2 = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)', 'Salinity(ppt)','pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year', 'ATemp_max' ,'ATemp_max_1dlag','ATemp_max_2dlag', 'ATemp_max_3dlag', 'ATemp_max_4dlag', 'ATemp_max_5dlag', 'ATemp_max_6dlag', 'ATemp_max_7dlag']
+X_2 = df[selected_features_2]  # Independent variables
+y_2 = df['Chlorophyll-a (ug/l)']  # target variable
+
+# Split the data into training and test sets
+X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(X_2, y_2, test_size=0.3, random_state=42)
+
+# Define the number of iterations for bagging.
+num_iterations = 100
+decision_trees_mean = []
+# Train decision trees using bagging
+for iteration in range(num_iterations):
+    bootstrap_indices = np.random.choice(len(X_train_2), size=len(X_train_2), replace=True)
+    X_train_bootstrap = X_train_2.iloc[bootstrap_indices]
+    y_train_bootstrap = y_train_2.iloc[bootstrap_indices]
+  
+    rf_model_HAB_Grid_02 = RandomForestRegressor(
+        random_state=42, 
+        max_depth=26,
+        min_samples_leaf=1,
+        min_samples_split=3,
+        n_estimators=1
+    )
+    rf_model_HAB_Grid_02.fit(X_train_bootstrap, y_train_bootstrap)
+    decision_trees_mean.append(rf_model_HAB_Grid_02)
+
+
 # Model B page
 elif page == 'Model B: Using Physical Chemical Water Quality and Meteorological Parameters':
     st.title('Estimate Chlorophyll-a (ug/l) Using Physical-Chemical Water Quality Parameters and Meteorological Parameters')
@@ -99,15 +136,16 @@ elif page == 'Model B: Using Physical Chemical Water Quality and Meteorological 
     
     if uploaded_file is not None:
         test_data = pd.read_csv(uploaded_file)
+        expected_feature_names = ['Secchi Depth(m)', 'DO(mg/l)', 'Temperature (deg cels)','Salinity(ppt)', 'pH', 'Turbidity(NTU)', 'Nitrate+Nitrite','Phosphate', 'N/P', 'Julian Year', 'ATemp_max' ,'ATemp_max_1dlag','ATemp_max_2dlag', 'ATemp_max_3dlag', 'ATemp_max_4dlag', 'ATemp_max_5dlag', 'ATemp_max_6dlag', 'ATemp_max_7dlag']
         
-        # Load Model B from GitHub
-        model_B = load_model_from_github(model_B_url)
-        
+        # Reorganize the columns to match the expected feature names
+        test_data = test_data[expected_feature_names]
+      
         # Make predictions using Model B
-        predictions = model_B.predict(test_data)
+        predictions = np.mean([tree.predict(test_data) for tree in decision_trees_mean], axis=0)
         
         # Append predictions as a new column
-        test_data['Model B Predictions'] = predictions
+        test_data['Estimated Chlorophyll-a (ug/l)'] = predictions
         
         # Download the results as a CSV file
         st.write("Download the results as a CSV file.")
