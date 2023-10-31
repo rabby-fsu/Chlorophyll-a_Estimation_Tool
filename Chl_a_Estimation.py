@@ -16,10 +16,6 @@ import xgboost as xgb
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 
-#Pretrained models
-#github_csv_url_A = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
-#github_csv_url_B = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelB_data.csv'
-
 
 # Define the URL to the CSV file in your GitHub repository
 #github_csv_url_A = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
