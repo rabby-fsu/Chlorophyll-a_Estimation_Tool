@@ -16,17 +16,17 @@ import xgboost as xgb
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 
-github_csv_url_A = 'https://raw.githubusercontent.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/main/ModelA_data.csv'
-github_csv_url_B = 'https://raw.githubusercontent.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/main/ModelB_data.csv'
+github_csv_url_A = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
+github_csv_url_B = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelB_data.csv'
 
 
 # Define the URL to the CSV file in your GitHub repository
 #github_csv_url_A = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelA_data.csv'
-df_A = pd.read_csv(github_csv_url_A)
+df_A = pd.read_csv(github_csv_url_A, sep=",", index_col=0)
 
 # Define the URL to the CSV file in your GitHub repository
 #github_csv_url_B = 'https://github.com/rabby-fsu/Chlorophyll-a_Estimation_Tool/blob/main/ModelB_data.csv'
-df_B = pd.read_csv(github_csv_url_B)
+df_B = pd.read_csv(github_csv_url_B, sep=",", index_col=0)
 
                  
 # Define the Streamlit app pages
