@@ -93,6 +93,7 @@ for iteration in range(num_iterations):
 
 
 if page == 'Home':    
+    st.write("Navigate the pages from the above to work using the following model: ")
     st.write("Model -A (Based one Physical-Chemical Water Quality Parameters: XGBoost Regression with Bayesian Optimization)")
     st.write("Model -B (Based one Physical-Chemical Water Quality and Meteorological Parameters: Decision Tree Regression optimized with Grid Search algorithm)")
     st.write("Please Note: Julian Year = Year + (Days into the Year / Total Days in the Year")
